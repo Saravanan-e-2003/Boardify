@@ -1,5 +1,5 @@
 {
-  "name": "kanban_taskmanager",
+  "name": "Boardify",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -43,5 +43,9 @@
   },
   "devDependencies": {
     "tailwindcss": "^3.2.7"
-  }
+  },
+  "description": "- Simple demo of our project Boardify",
+  "main": "tailwind.config.js",
+  "author": "saravanan",
+  "license": "ISC"
 }
