@@ -7,3 +7,4 @@ module.exports = {
   },
   plugins: [require("tailwind-scrollbar-hide")],
 };
+// Im cooked (@_@)😵
