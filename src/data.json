@@ -412,6 +412,10 @@
                   "isCompleted": false
                 },
                 {
+                  "title": "Redux",
+                  "isCompleted": false
+                },
+                {
                   "title": "Outline next steps for our roadmap",
                   "isCompleted": false
                 }
@@ -419,9 +423,18 @@
             }
           ]
         },
+        
         {
           "name": "Next",
-          "tasks": []
+          "tasks": [
+            {
+              "title": "Add Database",
+            "description": "",
+              "status": "",
+              "subtasks" : []
+            }
+
+          ]
         },
         {
           "name": "Later",
