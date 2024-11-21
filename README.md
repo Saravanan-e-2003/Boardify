@@ -6,7 +6,7 @@
 
 To access **Boardify**, simply click on the following link:
 
-**[Run Boardify](https://boardify-kjqtkjw8g-noah2003s-projects.vercel.app)**
+**[Run Boardify]([https://boardify-kjqtkjw8g-noah2003s-projects.vercel.app](https://boardify-ebon.vercel.app/))**
 
 ## Installation (Optional for Local Development)
 
