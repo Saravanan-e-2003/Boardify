@@ -94,6 +94,9 @@ function AddEditBoardModal({ setIsBoardModalOpen, type , }) {
             onChange={(e) => setName(e.target.value)}
             id="board-name-input"
           />
+          <button className="px-4 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-600 transition duration-300">
+            AI Suggestion
+      </button>
         </div>
 
         {/* Board Columns */}
