@@ -12,7 +12,9 @@ function AddEditBoardModal({ setIsBoardModalOpen, type , }) {
     { name: "Todo", tasks: [], id: uuidv4() },
     { name: "Doing", tasks: [], id: uuidv4() },
   ]);
-  const [isValid, setIsValid] = useState(true);
+  const [setIsValid] = useState(true);
+  // const [isValid,setIsValid] = useState(true); //actual line
+
   const board = useSelector((state) => state.boards).find(
     (board) => board.isActive
   );
@@ -75,7 +77,7 @@ function AddEditBoardModal({ setIsBoardModalOpen, type , }) {
     >
       <div
         className=" scrollbar-hide overflow-y-scroll max-h-[95vh]  bg-white dark:bg-[#2b2c37] text-black dark:text-white font-bold
-       shadow-md shadow-[#364e7e1a] max-w-md mx-auto my-auto w-full px-8  py-8 rounded-xl"
+        shadow-md shadow-[#364e7e1a] max-w-md mx-auto my-auto w-full px-8  py-8 rounded-xl"
       >
         <h3 className=" text-lg ">
           {type === "edit" ? "Edit" : "Add New"} Board
@@ -94,9 +96,9 @@ function AddEditBoardModal({ setIsBoardModalOpen, type , }) {
             onChange={(e) => setName(e.target.value)}
             id="board-name-input"
           />
-          <button className="px-4 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-600 transition duration-300">
+          {/* <button className="px-4 py-2 bg-[#635fc7] text-white font-bold rounded-3xl hover:bg-blue-600 transition duration-300">
             AI Suggestion
-      </button>
+      </button> */}
         </div>
 
         {/* Board Columns */}
@@ -121,6 +123,7 @@ function AddEditBoardModal({ setIsBoardModalOpen, type , }) {
                 onClick={() => {
                   onDelete(column.id);
                 }}
+                alt="cross-icon"
                 className=" m-4 cursor-pointer "
               />
             </div>
