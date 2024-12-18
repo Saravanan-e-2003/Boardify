@@ -12,8 +12,8 @@ function AddEditBoardModal({ setIsBoardModalOpen, type , }) {
     { name: "Todo", tasks: [], id: uuidv4() },
     { name: "Doing", tasks: [], id: uuidv4() },
   ]);
-  const [setIsValid] = useState(true);
-  // const [isValid,setIsValid] = useState(true); //actual line
+  // const [setIsValid] = useState(true); dont use
+  const [isValid,setIsValid] = useState(true); //actual line
 
   const board = useSelector((state) => state.boards).find(
     (board) => board.isActive

@@ -180,6 +180,7 @@ function AddEditTaskModal({
                   onDelete(subtask.id);
                 }}
                 className=" m-4 cursor-pointer "
+                alt="cross"
               />
             </div>
           ))}
@@ -222,7 +223,7 @@ function AddEditTaskModal({
             }}
             className=" w-full items-center text-white bg-[#635fc7] py-2 rounded-full "
           >
-           {type === "edit" ? " save edit" : "Create task"}
+          {type === "edit" ? " save edit" : "Create task"}
           </button>
         </div>
       </div>
