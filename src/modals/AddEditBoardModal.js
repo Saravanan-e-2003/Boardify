@@ -12,8 +12,8 @@ function AddEditBoardModal({ setIsBoardModalOpen, type , }) {
     { name: "Todo", tasks: [], id: uuidv4() },
     { name: "Doing", tasks: [], id: uuidv4() },
   ]);
-  const [setIsValid] = useState(true);
-  // const [isValid,setIsValid] = useState(true); //actual line
+  // const [setIsValid] = useState(true); dont use
+  const [isValid,setIsValid] = useState(true); //actual line
 
   const board = useSelector((state) => state.boards).find(
     (board) => board.isActive
@@ -96,9 +96,9 @@ function AddEditBoardModal({ setIsBoardModalOpen, type , }) {
             onChange={(e) => setName(e.target.value)}
             id="board-name-input"
           />
-          {/* <button className="px-4 py-2 bg-[#635fc7] text-white font-bold rounded-3xl hover:bg-blue-600 transition duration-300">
+          <button className="px-4 py-2 bg-[#635fc7] text-white font-bold rounded-3xl hover:bg-blue-600 transition duration-300">
             AI Suggestion
-      </button> */}
+      </button>
         </div>
 
         {/* Board Columns */}
