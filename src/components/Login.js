@@ -1,15 +1,36 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { doSignInWithEmailAndPassword,doSignInWithGoogle } from "../firebase/auth";
+import { useAuth } from "../context/authContext";
 
 const Login = () => {
-    const [email, setEmail] = useState("motts2003@gmail.com");
-    const [password, setPassword] = useState("Yeahitsme@2003");
+    const {userLoggedIn} = useAuth;
+    // const [email, setEmail] = useState("motts2003@gmail.com");
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [isSigningIn,setIsSigningIn] = useState(false);
+    const [errorMessage,setErrorMessage] = useState('');
+
     const navigate = useNavigate(); // Initialize useNavigate
 
-const handleSubmit = (e) => {
+const handleSubmit = async (e) => {
     e.preventDefault();
+    if(!isSigningIn){
+        setIsSigningIn(true);
+        await doSignInWithEmailAndPassword(email,password);
+    }
     // Check the login credentials or logic here (for simplicity, we'll skip it)
     navigate("/main"); // Navigate to MainPage after submit
+};
+
+const onGoogleSignIn = async(e) =>{
+    e.preventDefault();
+    if(!isSigningIn){
+        setIsSigningIn(true);
+        await doSignInWithGoogle().catch(err => {
+            setIsSigningIn(false);
+        })
+    }
 };
 
     return (
