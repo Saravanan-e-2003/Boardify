@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { doSignInWithEmailAndPassword,doSignInWithGoogle } from "../firebase/auth";
+import { doCreateUserWithEmailAndPassword, doSignInWithEmailAndPassword,doSignInWithGoogle } from "../firebase/auth";
 import { useAuth } from "../context/authContext";
 
 const SignUp = () => {
@@ -16,9 +16,9 @@ const SignUp = () => {
 const handleSubmit = async (e) => {
     e.preventDefault();
     if(!isSigningIn){
-        setIsSigningIn(true);
-        await doSignInWithEmailAndPassword(email,password);
-        navigate("/main");
+        // setIsSigningIn(true);
+        await doCreateUserWithEmailAndPassword(email,password);
+        navigate("/");
     }
     // Check the login credentials or logic here (for simplicity, we'll skip it)
      // Navigate to MainPage after submit
