@@ -11,12 +11,19 @@ import { useDispatch, useSelector } from "react-redux";
 import DeleteModal from "../modals/DeleteModal";
 import boardsSlice from "../redux/boardsSlice";
 
+// new stuffs
+import SidebarForChat from "./SidebarForChat";
+
+
+
 function Header({ setIsBoardModalOpen, isBoardModalOpen }) {
   const [openDropdown, setOpenDropdown] = useState(false);
   const [isElipsisMenuOpen, setIsElipsisMenuOpen] = useState(false);
   const [boardType, setBoardType] = useState("add");
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
+  const [showChatSidebar, setShowChatSidebar] = useState(false);
+
 
   const dispatch = useDispatch();
   
@@ -72,7 +79,15 @@ function Header({ setIsBoardModalOpen, isBoardModalOpen }) {
 
         {/* Right Side */}
 
+
         <div className=" flex space-x-4 items-center md:space-x-6 ">
+          {/* chat Button for bot */}
+        <button
+              onClick={() => setShowChatSidebar((curr) => !curr)}
+            className="button hidden md:block">
+              Chat
+            </button>
+
           <button
             className=" button hidden md:block "
             onClick={() => {
@@ -100,14 +115,17 @@ function Header({ setIsBoardModalOpen, isBoardModalOpen }) {
             alt="elipsis"
             className=" cursor-pointer h-6"
           />
+          
           {isElipsisMenuOpen && (
             <ElipsisMenu
               type="Boards"
               setOpenEditModal={setOpenEditModal}
               setOpenDeleteModal={setOpenDeleteModal}
             />
+            
           )}
         </div>
+
 
         {openDropdown && (
           <HeaderDropDown
@@ -139,6 +157,8 @@ function Header({ setIsBoardModalOpen, isBoardModalOpen }) {
           onDeleteBtnClick={onDeleteBtnClick}
         />
       )}
+  <SidebarForChat isOpen={showChatSidebar} setIsOpen={setShowChatSidebar} />
+
     </div>
   );
 }

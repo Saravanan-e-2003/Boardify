@@ -15,9 +15,18 @@ function ElipsisMenu({ type, setOpenEditModal, setOpenDeleteModal }) {
             onClick={() => {
               setOpenEditModal();
             }}
-            className=" cursor-pointer dark:text-gray-400 text-gray-700"
+            className="cursor-pointer dark:text-gray-400 text-gray-700"
           >
             Edit {type}
+          </p>
+
+          <p
+            onClick={() => {
+              console.log('Downloading Report.....');
+            }}
+            className="text-xs cursor-pointer dark:text-green-300 text-green-700"
+          >
+            Generate Report
           </p>
 
           <p
