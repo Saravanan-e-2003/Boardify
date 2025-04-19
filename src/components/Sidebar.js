@@ -31,6 +31,8 @@ function Sidebar({ isSideBarOpen, setIsSideBarOpen }) {
     setIsSideBarOpen((curr) => !curr);
   };
 
+  
+
   return (
     <div>
       <div
