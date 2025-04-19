@@ -14,31 +14,45 @@ function SidebarForChat({ isOpen, setIsOpen }) {
   const sendMessage = async () => {
     if (!input.trim()) return;
     
+    // config for chatbot API call
+    const config = {
+        maxOutputTokens: 50,
+        systemInstruction: [
+            {
+              text: `Your name is Boardify Bot, You are an Project Manager Chat bot, 
+              The questions can be related to SDLC and other developement and technical stuffs, 
+              dont answer if it is not related to project management or other technical questions, 
+              dont give me any bold or * words, everything should be plain text`,
+            }
+        ],
+      };
+
+      const model = 'gemini-2.0-flash';
+
     setMessages([...messages, { from: "user", text: input }]);
     const response = await ai.models.generateContent({
-    model: "gemini-2.0-flash",
+          model,
+          config,
           contents: input,
     });
-    console.log(response.text);
     
-
+    setInput("");
 
     console.log('response.............');
   
     // Simulate bot reply
-    setTimeout(() => {
-      setMessages((prev) => [
-        ...prev,
-        { from: "bot", text: response.text},
-      ]);
-    }, 600);
+        setMessages((prev) => [
+            ...prev,
+            { from: "bot", text: response.text},
+        ]);
+
   
-    setInput("");
+  
   };
 
   return (
     <div
-      className={`fixed top-0 right-0 h-full w-80 bg-white dark:bg-gray-900 border-l border-gray-300 z-60 shadow-xl transform transition-transform duration-300 ${
+      className={`fixed top-0 right-0 h-full w-96 bg-white dark:bg-gray-900 border-l border-gray-300 z-60 shadow-xl transform transition-transform duration-300 ${
         isOpen ? "translate-x-0" : "translate-x-full"
       }`}
     >
@@ -50,27 +64,32 @@ function SidebarForChat({ isOpen, setIsOpen }) {
 </button>
       <div className="p-4 flex flex-col h-full">
         <h2 className="text-xl font-bold mb-4 text-gray-800 dark:text-white">
-          🤖 Chatbot
+          🤖 Board Bot
         </h2>
 
         <div className="flex-1 overflow-y-auto mb-4 space-y-2">
-          {messages.map((msg, i) => (
+    {messages.map((msg, i) => (
+        <div
+            key={i}
+            className={`flex ${msg.from === "user" ? "justify-end" : "justify-start"}`}
+        >
             <div
-              key={i}
-              className={`text-sm px-3 py-2 rounded-md max-w-[80%] ${
+                className={`text-sm px-3 py-2 rounded-lg w-fit  ${
                 msg.from === "bot"
-                  ? "bg-gray-100 text-left text-gray-800 dark:bg-gray-700 dark:text-white"
-                  : "bg-blue-500 text-white self-end text-right"
-              }`}
+                    ? "chatBubble bg-white text-gray-800 dark:bg-gray-700 dark:text-white text-justify"
+                    : "chatBubble text-white max-w-[80%]"
+                }`}
             >
-              {msg.text}
+            {msg.text}
             </div>
-          ))}
+        </div>
+    ))}
+
         </div>
         <div className="flex">
           <input
             type="text"
-            className="flex-1 px-3 py-2 border border-gray-400 rounded-l-md text-sm dark:bg-gray-800 dark:text-white"
+            className="flex-1 px-3 py-2 border border-gray-400 rounded-l-2xl text-sm dark:bg-gray-800 dark:text-white"
             placeholder="Type a message..."
             value={input}
             onChange={(e) => setInput(e.target.value)}
@@ -78,7 +97,8 @@ function SidebarForChat({ isOpen, setIsOpen }) {
           />
           <button
             onClick={sendMessage}
-            className="bg-blue-600 text-white px-4 rounded-r-md hover:bg-blue-700 transition"
+            // className="bg-blue-600 text-white px-4 rounded-r-2xl hover:bg-blue-700 transition"
+            className = "button rounded-l-2xl"
           >
             Send
           </button>

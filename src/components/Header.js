@@ -84,8 +84,14 @@ function Header({ setIsBoardModalOpen, isBoardModalOpen }) {
           {/* chat Button for bot */}
         <button
               onClick={() => setShowChatSidebar((curr) => !curr)}
-            className="button hidden md:block">
-              Chat
+            className="button border-2 hidden md:block border-gray-700 text-gray-700 bg-white ">
+              Ask AI 🤖
+            </button>
+
+            <button
+              onClick={() => setShowChatSidebar((curr) => !curr)}
+            className="button border-2 py-1 px-3 md:hidden border-gray-700 text-gray-700 bg-white ">
+              🤖
             </button>
 
           <button
