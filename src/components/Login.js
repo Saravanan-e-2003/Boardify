@@ -6,33 +6,42 @@ import { useAuth } from "../context/authContext";
 const Login = () => {
     const {userLoggedIn} = useAuth;
     // const [email, setEmail] = useState("motts2003@gmail.com");
-    const [email, setEmail] = useState('motts2003@gmail.com');
-    const [password, setPassword] = useState('Yeahitsme@2003');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const [isSigningIn,setIsSigningIn] = useState(false);
     const [errorMessage,setErrorMessage] = useState('');
 
     const navigate = useNavigate(); // Initialize useNavigate
 
-const handleSubmit = async (e) => {
-    e.preventDefault();
-    if(!isSigningIn){
-        setIsSigningIn(true);
-        await doSignInWithEmailAndPassword(email,password);
-        navigate("/main");
-    }
-    // Check the login credentials or logic here (for simplicity, we'll skip it)
-     // Navigate to MainPage after submit
-};
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (!isSigningIn) {
+            setIsSigningIn(true);
+            try {
+                await doSignInWithEmailAndPassword(email, password);
+                navigate("/main");
+            } catch (err) {
+                const errorCode = err.code?.split("/")[1]; // Extracts 'invalid-email' from 'auth/invalid-email'
+                setErrorMessage(errorCode.replace(/-/g, ' ') || "Login failed");
+                setIsSigningIn(false);
+            }
+        }
+    };
 
-const onGoogleSignIn = async(e) =>{
-    e.preventDefault();
-    if(!isSigningIn){
-        setIsSigningIn(true);
-        await doSignInWithGoogle().catch(err => {
-            setIsSigningIn(false);
-        })
-    }
-};
+    const onGoogleSignIn = async (e) => {
+        e.preventDefault();
+        if (!isSigningIn) {
+            setIsSigningIn(true);
+            try {
+                await doSignInWithGoogle();
+                navigate("/main");
+            } catch (err) {
+                const errorCode = err.code?.split("/")[1]; // Extracts 'invalid-email' from 'auth/invalid-email'
+                setErrorMessage(errorCode.replace(/-/g, ' ') || "Login failed");
+                setIsSigningIn(false);
+            }
+        }
+    };
 
 const SignUpPage = () => {
     navigate("/signup");
@@ -40,8 +49,21 @@ const SignUpPage = () => {
 
     return (
         <div className="flex justify-center items-center h-screen bg-gray-100">
+            
+
+
             <div className="bg-white shadow-lg rounded-lg p-8 w-96">
                 <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
+
+                {errorMessage && (
+                <div>
+                    <p className="text-red-500 text-sm mt-2 font-bold text-center underline capitalize bg-red-200 rounded-sm p-1 mx-auto">
+                        ❌{errorMessage}
+                     </p>
+                    <br></br>
+                </div>
+                )}
+
                 <form className="space-y-4" onSubmit={handleSubmit}>
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Email</label>
@@ -79,7 +101,9 @@ const SignUpPage = () => {
         >
             SignUp
         </button>
-        
+
+
+         
     </div>
     </div>
     );
