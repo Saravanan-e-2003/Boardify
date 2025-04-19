@@ -3,7 +3,7 @@ builds/
 
 node_modules/
 
-
+.env
 .DS_Store
 .env
 .idea/

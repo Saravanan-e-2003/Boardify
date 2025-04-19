@@ -22,7 +22,7 @@ function ElipsisMenu({ type, setOpenEditModal, setOpenDeleteModal }) {
 
           <p
             onClick={() => {
-              console.log('Downloading Report.....');
+              console.log(process.env.REACT_APP_FIREBASE_API_KEY);
             }}
             className="text-xs cursor-pointer dark:text-green-300 text-green-700"
           >

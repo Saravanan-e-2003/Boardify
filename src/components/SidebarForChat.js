@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { GoogleGenAI } from "@google/genai";
+
+const ai = new GoogleGenAI({ apiKey: process.env.REACT_APP_GEMINI_API_KEY });
 
 function SidebarForChat({ isOpen, setIsOpen }) {
       console.log("Sidebar rendered", isOpen);
@@ -8,22 +11,34 @@ function SidebarForChat({ isOpen, setIsOpen }) {
 
   const [input, setInput] = useState("");
 
-  const sendMessage = () => {
+  const sendMessage = async () => {
     if (!input.trim()) return;
+    
     setMessages([...messages, { from: "user", text: input }]);
+    const response = await ai.models.generateContent({
+    model: "gemini-2.0-flash",
+          contents: input,
+    });
+    console.log(response.text);
+    
+
+
+    console.log('response.............');
+  
     // Simulate bot reply
     setTimeout(() => {
       setMessages((prev) => [
         ...prev,
-        { from: "bot", text: "Got it! Let me think..." },
+        { from: "bot", text: response.text},
       ]);
     }, 600);
+  
     setInput("");
   };
 
   return (
     <div
-      className={`fixed top-0 right-0 h-full w-80 bg-white dark:bg-gray-900 border-l border-gray-300 z-50 shadow-xl transform transition-transform duration-300 ${
+      className={`fixed top-0 right-0 h-full w-80 bg-white dark:bg-gray-900 border-l border-gray-300 z-60 shadow-xl transform transition-transform duration-300 ${
         isOpen ? "translate-x-0" : "translate-x-full"
       }`}
     >
