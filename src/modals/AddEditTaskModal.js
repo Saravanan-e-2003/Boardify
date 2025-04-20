@@ -3,6 +3,27 @@ import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import crossIcon from "../assets/icon-cross.svg";
 import boardsSlice from "../redux/boardsSlice";
+import { GoogleGenAI } from "@google/genai";
+
+const ai = new GoogleGenAI({ apiKey: process.env.REACT_APP_GEMINI_API_KEY });
+
+const Rephrase = async(str) =>{
+
+  const response = await ai.models.generateContent({
+    model: "gemini-2.0-flash",
+    contents: str,
+    config: {
+      maxOutputTokens: 50,
+      systemInstruction: [
+        {
+          text: `Assume yourself as a product manager and only give me the reply in a plain text,
+           only the rephrased content rephrase the following sentence in an professional and technical manner suitable for corporates:`,
+        }
+    ],
+    },
+  });
+  return response.text;
+}
 
 function AddEditTaskModal({
   type,
@@ -17,6 +38,8 @@ function AddEditTaskModal({
   const [isValid, setIsValid] = useState(true);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const[ValText,SetValText] = useState("");
+
   const board = useSelector((state) => state.boards).find(
     (board) => board.isActive
   );
@@ -146,14 +169,24 @@ function AddEditTaskModal({
             Description
           </label>
           <textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            value={ValText}
+            onChange={(e) =>{ setDescription(e.target.value); SetValText(e.target.value)}}
             id="task-description-input"
             className=" bg-transparent outline-none min-h-[200px] focus:border-0 px-4 py-2 rounded-md text-sm  border-[0.5px] border-gray-600 focus:outline-[#635fc7] outline-[1px] "
             placeholder="e.g. It's always good to take a break. This 
             15 minute break will  recharge the batteries 
             a little."
           />
+          <button
+            className="button w-fit text-sm self-end"
+            onClick={async() =>{
+              const st = await Rephrase(ValText);
+              SetValText(st);
+              setDescription(st);
+            }}
+          >
+            AI Rephrase
+            </button>
         </div>
 
         {/* Subtasks */}
