@@ -4,7 +4,7 @@ import { GoogleGenAI } from "@google/genai";
 const ai = new GoogleGenAI({ apiKey: process.env.REACT_APP_GEMINI_API_KEY });
 
 function SidebarForChat({ isOpen, setIsOpen }) {
-      console.log("Sidebar rendered", isOpen);
+      // console.log("Sidebar rendered", isOpen);
   const [messages, setMessages] = useState([
     { from: "bot", text: "Hi! How can I help you?" },
   ]);
@@ -38,7 +38,6 @@ function SidebarForChat({ isOpen, setIsOpen }) {
     
     setInput("");
 
-    console.log('response.............');
   
     // Simulate bot reply
         setMessages((prev) => [
