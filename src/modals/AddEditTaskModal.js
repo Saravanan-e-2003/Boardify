@@ -22,6 +22,7 @@ const Rephrase = async(str) =>{
     ],
     },
   });
+
   return response.text;
 }
 
@@ -39,7 +40,8 @@ function AddEditTaskModal({
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const[ValText,SetValText] = useState("");
-
+  const [isLoading, setIsLoading] = useState(false);
+  
   const board = useSelector((state) => state.boards).find(
     (board) => board.isActive
   );
@@ -180,9 +182,11 @@ function AddEditTaskModal({
           <button
             className="button w-fit text-sm self-end"
             onClick={async() =>{
+              setIsLoading(true);
               const st = await Rephrase(ValText);
               SetValText(st);
               setDescription(st);
+              setIsLoading(false);
             }}
           >
             AI Rephrase

@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useState }  from "react";
 import { jsPDF } from "jspdf";
 import { GoogleGenAI } from "@google/genai";
 import { Buffer } from 'buffer';
+import { motion, AnimatePresence } from "framer-motion";
 
 
 const ai = new GoogleGenAI({ apiKey: process.env.REACT_APP_GEMINI_API_KEY });
 function ElipsisMenu({ type, setOpenEditModal, setOpenDeleteModal }) {
+  const [isLoading, setIsLoading] = useState(false);
+
+
   return (
     <div
       className={
@@ -14,7 +18,30 @@ function ElipsisMenu({ type, setOpenEditModal, setOpenDeleteModal }) {
           : " absolute  top-6  right-4"
       }
     >
+
       <div className=" flex justify-end items-center">
+      {isLoading && (
+  <AnimatePresence>
+    <motion.div
+      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
+      <motion.div
+        className="bg-gray-600 p-6 rounded-lg shadow-lg text-center"
+        initial={{ scale: 0.8, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.8, opacity: 0 }}
+        transition={{ duration: 0.3 }}
+      >
+        <p className="text-lg font-medium animate-pulse text-black">Loading...</p>
+      </motion.div>
+    </motion.div>
+  </AnimatePresence>
+)}
+
+
         <div className=" w-40 text-sm z-50 font-medium shadow-md shadow-[#364e7e1a] bg-white dark:bg-[#20212c] space-y-4 py-5 px-4 rounded-lg  h-auto pr-12">
           <p
             onClick={() => {
@@ -28,6 +55,7 @@ function ElipsisMenu({ type, setOpenEditModal, setOpenDeleteModal }) {
           <p
   onClick={async () => {
     try{
+      setIsLoading(true);
     const boardsData = localStorage.getItem("boardsData");
 
     if (boardsData) {
@@ -92,7 +120,10 @@ function ElipsisMenu({ type, setOpenEditModal, setOpenDeleteModal }) {
     }
   }catch{
     console.error("PDF generation failed:");
-  }}}
+  }finally {
+    setIsLoading(false);
+  }
+}}
   className="text-xs cursor-pointer dark:text-green-300 text-green-700"
 >
   Generate Report
